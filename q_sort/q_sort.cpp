@@ -49,7 +49,7 @@ void q_short(int low, int high)
 	i = low + 1;  //langkah 3
 	j = high; //langkah 4
 	pivot = arr[low]; //langkah 2
-
+	 
 	while (i <= j) //langkah 10
 	{
 		//search for an element greater than pivot
