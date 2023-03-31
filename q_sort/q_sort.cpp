@@ -1,20 +1,110 @@
-// q_sort.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+using namespace std;
 
-int main()
+//Array of integrers to hold values
+int arr[20];
+int cmp_count = 0; //number of comparasion
+int mov_count = 0; //number of movement
+int n;
+void input() {
+	while (true)
+	{
+		cout << "Masukkan panjang element array :";
+		cin >> n;
+
+		if (n <= 20)
+			break;
+		else
+			cout << "n\ Maksimum panjang array adalah 20 " << endl;
+
+	}
+	cout << "\n----------------" << endl;
+	cout << "\nEnter array element" << endl;
+	cout << "\n----------------" << endl;
+
+	for (int i = 0; i < n; i++)
+
+	{
+		cout << "<" << (i + 1) << ">";
+		cin >> arr[i];
+	}
+}
+//Swap the element at index x with the element at index y
+void swap(int x, int y)
 {
-    std::cout << "Hello World!\n";
+	int temp;
+	temp = arr[x];
+	arr[x] = arr[y];
+	arr[y] = temp;
+}
+void q_short(int low, int high)
+{
+	int pivot, i, j;
+	if (low > high) // langkah 1
+		return;
+
+	//partition the list into two parts
+	//one containing element less that or equal to pivot
+	//outher containing element greather than pivot
+	i = low + 1;  //langkah 3
+	j = high; //langkah 4
+	pivot = arr[low]; //langkah 2
+
+	while (i <= j) //langkah 10
+	{
+		//search for an element greater than pivot
+		while ((arr[i] <= pivot) && (i <= high)) //langkah 5
+		{
+			i++; //langkah 6
+			cmp_count++;
+		}
+		cmp_count++;
+		//seacrh for an element less thanor equal to pivot
+		while ((arr[j] > pivot) && (j >= low)) //langkah 7
+		{
+			j--;//langkah 8
+			cmp_count++;
+		}
+		cmp_count++;
+		if (i < j) //langkah 9
+			//if greater element is on left of the element
+		{
+			//swap the element at index i with the element atindex j
+			swap(i, j);
+			mov_count++;
+		}
+	}
+	//now containt the index of the last element in the sort list
+	if (low < j)//langkah 11
+		//move to the pivot to its correct position in the list
+	{
+		swap(low, j);
+		mov_count++;
+	}
+	//sort the list on the left of pivot using quick sort
+	q_short(low, j - 1); //langkah 12
+	//sort the list on the right of pivot using quick sort
+	q_short(j + 1, high); //langkah 13
+}
+void display() {
+	cout << "\n--------------" << endl;
+	cout << "\n-sorted array" << endl;
+	cout << "\n--------------" << endl;
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << arr[i] << " ";
+	}
+	cout << "\n\nNumber of comparasions: " << cmp_count << endl;
+	cout << "Number of movement: " << mov_count << endl;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+int main() {
+	input();
+	//sort the array using quick sort
+	q_short(0, n - 1);
+	display();
+	system("pause");
+	return 0;
+}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
