@@ -73,7 +73,7 @@ void q_short(int low, int high)
 			swap(i, j);
 			mov_count++;
 		}
-	}
+	} 
 	//now containt the index of the last element in the sort list
 	if (low < j)//langkah 11
 		//move to the pivot to its correct position in the list
